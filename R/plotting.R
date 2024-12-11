@@ -1,4 +1,4 @@
-#' Useful plotting libraries
+#' @title Useful plotting libraries
 #'
 
 require(patchwork)
@@ -43,7 +43,7 @@ theme_custom <- function(text_size = 8) {
     )
 }
 
-#' Save plots
+#' @title Save plots
 #'
 #' @description Save and print plots as pdf eps or tikz file.
 #'
