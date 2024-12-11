@@ -11,7 +11,7 @@ require(wesanderson)
 require(paletteer)
 require(ggsignif)
 
-#' Customised ggplot theme
+#' @title Customised ggplot theme
 #'
 #' @description Customised ggplot theme based on theme_minimal()
 #'
