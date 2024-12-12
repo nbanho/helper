@@ -1,4 +1,4 @@
-#' @title Smart rounding
+#' @title Rounding
 #'
 #' @description Round vector without remainder.
 #'

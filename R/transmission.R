@@ -1,4 +1,4 @@
-#' @title Discretise epi delay distribution
+#' @title Distribution of epidemiological parameters
 #'
 #' @description Create discrete vector of continuous delay distribution.
 #'

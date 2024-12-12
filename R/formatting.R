@@ -1,4 +1,4 @@
-#' @title Fixed rounding
+#' @title Rounding
 #'
 #' @description Round numeric to fixed decimal.
 #'
@@ -13,7 +13,7 @@ round_k <- function(x, k = 2) {
 }
 
 
-#' @title Format p-values
+#' @title Format statistics
 #'
 #' @description Format p-values in typical journal reporting syle.
 #'
