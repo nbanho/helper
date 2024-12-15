@@ -15,6 +15,10 @@ rubins_rule <- function(models, coef) {
   # Standard errors
   std_errors <- map_dbl(models, ~ sqrt(diag(vcov(.x)))[coef])
 
+  # Filter NAs
+  estimates <- estimates[!is.na(std_errors)]
+  std_errors <- std_errors[!is.na(std_errors)]
+
   # Number of datasets
   m <- length(estimates)
 
