@@ -9,6 +9,9 @@
 #'
 
 rubins_rule <- function(models, coef) {
+  # Filter failed models
+  models <- Filter(Negate(is.null), models)
+
   # Estimates
   estimates <- map_dbl(models, ~ coef(.x)[coef])
 
