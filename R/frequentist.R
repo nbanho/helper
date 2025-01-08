@@ -5,11 +5,12 @@
 #' @param models list of fitted models
 #' @param coef predictor/coefficient that should be pooled
 #' @param pool_fun the function to pool estimates
+#' @param var_fun the function to compute variance between estimates
 #'
 #' @return named vector with estimate, std_error and p_value
 #'
 
-rubins_rule <- function(models, coef, pool_fun = mean) {
+rubins_rule <- function(models, coef, pool_fun = mean, var_fun = var) {
   # Filter failed models
   models <- Filter(Negate(is.null), models)
 
@@ -33,7 +34,7 @@ rubins_rule <- function(models, coef, pool_fun = mean) {
   within_var <- pool_fun(std_errors^2)
 
   # Calculate the between-imputation variance
-  between_var <- var(estimates)
+  between_var <- var_fun(estimates)
 
   # Calculate the total variance
   total_var <- within_var + (1 + 1 / m) * between_var
