@@ -35,7 +35,7 @@ theme_custom <- function(text_size = 8) {
       ),
       strip.text = element_text(size = text_size),
       panel.grid.major = element_blank(),
-      panel.border = element_blank(),
+      panel.border = element_rect(fill = NA),
       axis.line.x = element_line(),
       axis.line.y = element_line(),
       axis.ticks = element_line(),
