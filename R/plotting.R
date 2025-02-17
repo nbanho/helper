@@ -39,7 +39,10 @@ theme_custom <- function(text_size = 8) {
       axis.line.x = element_line(),
       axis.line.y = element_line(),
       axis.ticks = element_line(),
-      legend.text = element_text(size = 8)
+      legend.text = element_text(size = 8),
+      panel.spacing.x = unit(.5, "cm"),
+      strip.text.x = element_text(face = 2),
+      legend.position = "bottom"
     )
 }
 

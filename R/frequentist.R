@@ -55,6 +55,50 @@ rubins_rule <- function(models, coef, pool_fun = mean, var_fun = var) {
   )
 }
 
+#' @param c1 coefficient name 1
+#' @param c2 coefficient name 2
+
+rubins_rule_covar <- function(models, c1, c2, pool_fun = mean) {
+  # Filter failed models
+  models <- Filter(Negate(is.null), models)
+
+  # Estimates
+  estimates_1 <- map_dbl(models, ~ coef(.x)[c1])
+  estimates_2 <- map_dbl(models, ~ coef(.x)[c2])
+
+  # Standard errors
+  std_errors_1 <- map_dbl(models, ~ sqrt(diag(vcov(.x)))[c1])
+  std_errors_2 <- map_dbl(models, ~ sqrt(diag(vcov(.x)))[c2])
+
+  # Covariances
+  within_cov <- map_dbl(models, ~ vcov(.x)[c1, c2])
+
+  # Filter NAs
+  estimates_1 <- estimates_1[!is.na(std_errors_1) & !is.na(std_errors_2)]
+  estimates_2 <- estimates_2[!is.na(std_errors_1) & !is.na(std_errors_2)]
+  within_cov <- within_cov[!is.na(std_errors_1) & !is.na(std_errors_2)]
+
+  # Compute within-imputation covariance (W)
+  W <- pool_fun(within_cov)
+
+  # Compute mean estimates
+  mean_est_1 <- pool_fun(estimates_1)
+  mean_est_2 <- pool_fun(estimates_2)
+
+  # Compute between-imputation covariance (B)
+  if (identical(pool_fun, mean)) {
+    m <- sum(!is.na(std_errors_1) & !is.na(std_errors_2))
+    B <- sum((estimates_1 - mean_est_1) * (estimates_1 - mean_est_2)) / (m - 1)
+    # Compute total covariance (T)
+    WT <- W + (1 + 1 / m) * B
+  } else {
+    B <- pool_fun((estimates_1 - mean_est_1) * (estimates_1 - mean_est_2))
+    # Compute total covariance (T)
+    WT <- W + B
+  }
+  return(WT)
+}
+
 
 #' @title Feature importance
 #'
