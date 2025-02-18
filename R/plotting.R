@@ -33,7 +33,7 @@ theme_custom <- function(text_size = 8) {
         hjust = 0,
         margin = ggplot2::margin(0, 0, 5, 0)
       ),
-      strip.text = element_text(size = text_size),
+      strip.text = element_text(size = text_size, margin = margin(b = 5.5)),
       panel.grid.major = element_blank(),
       panel.border = element_rect(fill = NA),
       axis.line.x = element_line(),
