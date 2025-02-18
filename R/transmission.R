@@ -12,7 +12,7 @@
 
 disc_dist <- function(t, from0, FUN, ...) {
   x <- seq(0, t)
-  y <- length(x)
+  y <- numeric(length(x))
   if (from0) {
     y[1] <- FUN(0.5, ...)
     y[2] <- FUN(1.5, ...) - FUN(0.5, ...)
@@ -23,5 +23,7 @@ disc_dist <- function(t, from0, FUN, ...) {
   for (i in 3:length(x)) {
     y[i] <- FUN(x[i] + 0.5, ...) - FUN(x[i] - 0.5, ...)
   }
+  y_tot <- FUN(t + .5, ...)
+  y <- y / y_tot
   return(y)
 }
