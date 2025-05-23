@@ -10,6 +10,7 @@ require(gg.layers)
 require(wesanderson)
 require(paletteer)
 require(ggsignif)
+require(ggtext)
 
 #' @title Customised ggplot theme
 #'
@@ -42,7 +43,8 @@ theme_custom <- function(text_size = 8) {
       legend.text = element_text(size = 8),
       panel.spacing.x = unit(.5, "cm"),
       strip.text.x = element_text(face = 2),
-      legend.position = "bottom"
+      legend.position = "bottom",
+      plot.background = element_rect(fill = "white", color = NA)
     )
 }
 
