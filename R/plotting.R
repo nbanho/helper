@@ -11,6 +11,7 @@ require(wesanderson)
 require(paletteer)
 require(ggsignif)
 require(ggtext)
+require(tools)
 
 #' @title Customised ggplot theme
 #'
@@ -34,7 +35,11 @@ theme_custom <- function(text_size = 8) {
         hjust = 0,
         margin = ggplot2::margin(0, 0, 5, 0)
       ),
-      strip.text = element_text(size = text_size, margin = margin(b = 5.5)),
+      strip.text = element_text(
+        size = text_size,
+        margin = margin(b = 5.5, l = 5.5, r = 5.5, t = 5.5),
+        face = 2
+      ),
       panel.grid.major = element_blank(),
       panel.border = element_rect(fill = NA),
       axis.line.x = element_line(),
@@ -42,40 +47,49 @@ theme_custom <- function(text_size = 8) {
       axis.ticks = element_line(),
       legend.text = element_text(size = 8),
       panel.spacing.x = unit(.5, "cm"),
-      strip.text.x = element_text(face = 2),
+      panel.spacing.y = unit(.5, "cm"),
       legend.position = "bottom",
+      plot.background = element_rect(fill = "white", color = NA),
       plot.background = element_rect(fill = "white", color = NA)
     )
 }
 
-#' @title Save plots
+#' @title Save and print ggplots
 #'
-#' @description Save and print plots as pdf eps or tikz file.
+#' @description Convenience function to save and print ggplot objects as .pdf, .tif, or .png.
 #'
 #' @param pl ggplot
-#' @param pdf_file filepath to pdf
-#' @param eps_file filepath to eps
-#' @param tikz_file filepath to tikz
+#' @param pdf_file filepath (specify type: "plot.pdf", "plot.tif", "plot.png")
 #' @param w width in cm
 #' @param h height in cm
+#' @param ... additional arguments passed to ggsave
 #'
 #' @return NULL (save and print plot)
 #'
 
 save_plot <- function(
     pl,
-    pdf_file = NULL, eps_file = NULL, tikz_file = NULL,
-    w = 8, h = 4) {
+    pdf_file = NULL,
+    w = 8, h = 4,
+    ...) {
+  # print plot
   print(pl)
-  if (!is.null(pdf_file)) {
-    ggsave(pdf_file, width = w / cm(1), height = h / cm(1))
-  }
-  if (!is.null(tikz_file)) {
-    tikz(tikz_file, width = w / cm(1), height = h / cm(1))
-    print(pl)
-    dev.off()
-  }
-  if (!is.null(eps_file)) {
-    cairo_ps(filename = eps_file, width = w / cm(1), height = h / cm(1))
+  # save as .tif
+  if (tools::file_ext(pdf_file) == "tif") {
+    ggsave(
+      plot = pl,
+      filename = pdf_file,
+      width = w / cm(1), height = h / cm(1),
+      device = "tiff",
+      compress = "lzw",
+      ...
+    )
+  } else {
+    # save as .pdf or .png
+    ggsave(
+      plot = pl,
+      filename = pdf_file,
+      width = w / cm(1), height = h / cm(1)
+    )
   }
 }
