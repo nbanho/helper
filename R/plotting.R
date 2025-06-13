@@ -50,7 +50,7 @@ theme_custom <- function(text_size = 8) {
       panel.spacing.y = unit(.5, "cm"),
       legend.position = "bottom",
       plot.background = element_rect(fill = "white", color = NA),
-      plot.background = element_rect(fill = "white", color = NA)
+      panel.background = element_rect(fill = "white", color = NA)
     )
 }
 
